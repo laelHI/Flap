@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div>
+            <p class="score">Score: <span id="scoreCount"> 0 </span></p>
+            <p class="record">Record: <span id="recordCount"> 0 </span></p>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <canvas class="game" id="canvas" width="800px" height="500px">
+                Your browser does not support HTML5 canvas.
+            </canvas>
+        </div>
+        <div class="menu" id="menu">
+            <div  id="levelOne">
+                <div class="levels" style="background-color: #94b495;">
+                    <p>One</p>
+                </div>
+            </div>
+            <div  id="levelTwo">
+                <div class="levels" style="background-color: #cfd1a8;">
+                    <p>Two</p>
+                </div>
+            </div>
+            <div  id="levelThree">
+                <div class="levels" style="background-color: #be9696;">
+                    <p>Three</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="menu" id="gameOver">
+                <p>
+                    Game Over
+                </p>
+            </div>
+        </div>
+        <div>
+            <div class="menu" id="youWin">
+                <p>
+                    You Win!
+                </p>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+</html>
