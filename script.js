@@ -6,6 +6,7 @@ let levels = document.querySelector(".levels")
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let record = document.getElementById("recordCount")
+let recordbox = document.querySelector(".record")
 let score = document.getElementById("scoreCount")
 
 let mode = 'menu';
@@ -16,7 +17,7 @@ let levelOne = document.getElementById('levelOne');
 let levelTwo = document.getElementById('levelTwo')
 let levelThree = document.getElementById('levelThree')
 
-let gameLevels = [levelOne, levelTwo, levelThree];
+let gameLevels = [levelOne, levelTwo, levelThree];//up to ten then infinite then infinite speed up
 let gameLevel = 0
 //gameLevels[gamelevel]
 let cubeY = 100;
@@ -25,6 +26,9 @@ let gravity = 0.1
 let jumpStrength = -3
 let speed = 3;
 let jumping = false;
+
+let current;
+let newRecord = 0;
 
 let pilars = []
 newPilar()
@@ -43,11 +47,18 @@ function newPilar(){
 
 }
 //let jumping = false;
+recordbox.style.visibility = 'hidden'
 function play(){
     if (mode == 'game'){
         
         cubeY += velocity;  //-=
         velocity += gravity;  //-=
+
+        // if (cubeY < 0) cubeY = 0;/////////////////////////////////////////////////////
+        // if (cubeY > canvas.height - 50) cubeY = canvas.height - 50;
+
+        // velocity = Math.max(-10, Math.min(10, velocity));
+
         if (jumping && velocity>0){
             jumping =false;
             // velocity += gravity;
@@ -84,10 +95,17 @@ function play(){
 let selectedIcon = undefined;
 let level;
 function firstLevel(){
-    // ctx.beginPath();
-    // ctx.fillStyle = "#94b495";
-    // ctx.fillRect(canvas.width/2, 0, 50, canvas.height);
-
+    game()
+}
+function secondLevel(){
+    recordbox.style.visibility = 'visible'
+    game()
+}
+function thirdLevel(){
+    recordbox.style.visibility = 'visible'
+    game()
+}
+function game(){
     for (let i = 0; i < pilars.length; i++){
         let pilar = pilars[i];
         pilar.x -= speed;
@@ -116,8 +134,22 @@ function firstLevel(){
 
         let yCollision = cubeTop < pilarTop || cubeBottom > pilarBottom;
 
+
         if (xCollision && yCollision) {
             gameOver();
+        }
+        if (level == 'one'){
+            if (current >= 10){
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////win
+                mode = "gameOver"
+                youWinMenu.style.visibility = 'visible';
+            }
+        }
+        else if (level == 'three') {
+            speed = (current * 0.05);
+        //     gravity += (current * 0.005);
+        //     jumpStrength -= (current * 0.002);
+        
         }
     }
     
@@ -126,9 +158,7 @@ function firstLevel(){
     if (lastPilar.x < canvas.width - lastPilar.spawnDistance){
         newPilar()
     }
-    if (current>= 10){
-
-    }
+    
 }
 
 function selectIcon(element){
@@ -148,8 +178,6 @@ function nextLevel() {
 }
 
 function confirmLevel() {
-    console.log("Level selected:", gameLevels[gameLevel]);
-
     if (gameLevel == 0){
         level = 'one'
     }
@@ -180,9 +208,6 @@ function changeLevel() {
     // menu.style.visibility = 'hidden';
     // start.style.display = 'flex';
 }
-let current;
-let newRecord = 0;
-
 function updateScore(){
     if (mode != 'gameOver'){
         current = pilars.filter(p=>p.passed).length
@@ -206,9 +231,14 @@ function gameOver(){
 }
 function restartGame(){
     gameOverMenu.style.visibility = "hidden";
+    youWinMenu.style.visibility = "hidden";
+    
+    current = 0;
     score.innerHTML = 0;
+    jumpStrength = -3
     jumping = false
     velocity = 0;
+    confirmLevel();
     //lastMilestone 
     gravity = 0.1;
     speed = 3
@@ -236,6 +266,7 @@ function inputRouter(input) {
         if (input == "tap"){
             restartGame()
         }
+        // else if (input == "hold"){}
     }
 }
 
