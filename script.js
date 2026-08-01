@@ -27,7 +27,7 @@ let jumpStrength = -3
 let speed = 3;
 let jumping = false;
 
-let current;
+let current = 0;
 let newRecord = 0;
 
 let pilars = []
@@ -145,14 +145,13 @@ function game(){
                 youWinMenu.style.visibility = 'visible';
             }
         }
-        else if (level == 'three') {
-            speed = (current * 0.05);
-        //     gravity += (current * 0.005);
-        //     jumpStrength -= (current * 0.002);
-        
-        }
     }
-    
+    if (level == 'three') {
+        gravity = 0.1 + current * 0.009;      // noticeable but stable
+        speed = 3 + current * 0.2;           // pillars move faster
+        // jumpStrength = -3 + current * 0.05;  // jumps get slightly stronger
+    }
+
     let lastPilar = pilars[pilars.length-1];
 
     if (lastPilar.x < canvas.width - lastPilar.spawnDistance){
@@ -238,7 +237,7 @@ function restartGame(){
     jumpStrength = -3
     jumping = false
     velocity = 0;
-    confirmLevel();
+    // confirmLevel();
     //lastMilestone 
     gravity = 0.1;
     speed = 3
