@@ -187,6 +187,12 @@ function confirmLevel() {
     }
     mode = "game";
     menu.style.visibility = 'hidden'
+    if (level == 'two'){
+        record.innerHTML = newRecordTwo;
+    }
+    else  if (level == 'three'){
+        record.innerHTML = newRecordThree
+    }
     // restart();
 }
 
@@ -206,18 +212,15 @@ function changeLevel() {
     gameOverMenu.style.visibility = 'hidden';
     youWinMenu.style.visibility = 'hidden';
     menu.style.visibility = 'visible';
+    
     current = 0;
     score.innerHTML = 0;
+    chooseGameLevel()
+    // if(mode == 'game'){
+        
+    //     // restartGame()
+    // }
     
-    if (chooseGameLevel()){
-        if (level == 'two'){
-            record.innerHTML = newRecordTwo;
-        }
-        else  if (level == 'three'){
-            record.innerHTML = newRecordThree
-        }
-        restartGame()
-    }
 }
 let newRecordTwo = 0;
 let newRecordThree = 0;
@@ -274,7 +277,6 @@ function inputRouter(input) {
     if (mode == "menu"){
         if (input === "hold"){
             confirmLevel()
-            //play()
         }
         else if (input === "tap"){
             nextLevel();
