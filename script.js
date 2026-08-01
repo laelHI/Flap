@@ -208,13 +208,14 @@ function changeLevel() {
     menu.style.visibility = 'visible';
     current = 0;
     score.innerHTML = 0;
-    if (level == 'two'){
-        record.innerHTML = newRecordTwo;
-    }
-    else  if (level == 'three'){
-        record.innerHTML = newRecordThree
-    }
+    
     if (chooseGameLevel()){
+        if (level == 'two'){
+            record.innerHTML = newRecordTwo;
+        }
+        else  if (level == 'three'){
+            record.innerHTML = newRecordThree
+        }
         restartGame()
     }
 }
