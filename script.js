@@ -28,7 +28,6 @@ let speed = 3;
 let jumping = false;
 
 let current = 0;
-let newRecord = 0;
 
 let pilars = []
 newPilar()
@@ -203,17 +202,40 @@ function resumeGame() {
     menu.style.visibility = 'hidden';
 }
 function changeLevel() {
-    // mode = "start";
-    // menu.style.visibility = 'hidden';
-    // start.style.display = 'flex';
+    mode = "menu";
+    gameOverMenu.style.visibility = 'hidden';
+    youWinMenu.style.visibility = 'hidden';
+    menu.style.visibility = 'visible';
+    current = 0;
+    score.innerHTML = 0;
+    if (level == 'two'){
+        record.innerHTML = newRecordTwo;
+    }
+    else  if (level == 'three'){
+        record.innerHTML = newRecordThree
+    }
+    if (chooseGameLevel()){
+        restartGame()
+    }
 }
+let newRecordTwo = 0;
+let newRecordThree = 0;
+
 function updateScore(){
     if (mode != 'gameOver'){
         current = pilars.filter(p=>p.passed).length
         score.innerHTML = current;
-        if (current > newRecord){
-            newRecord = current;
-            record.innerHTML = newRecord;
+        if (level == 'two'){
+            if (current > newRecordTwo){
+                newRecordTwo = current;
+                record.innerHTML = newRecordTwo;
+            }
+        }
+        else if (level == 'three'){
+            if (current > newRecordThree){
+                newRecordThree = current;
+                record.innerHTML = newRecordThree;
+            }
         }
     }
 }
@@ -265,7 +287,9 @@ function inputRouter(input) {
         if (input == "tap"){
             restartGame()
         }
-        // else if (input == "hold"){}
+        else if (input == "hold"){
+            changeLevel()
+        }
     }
 }
 
